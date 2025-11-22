@@ -17,15 +17,49 @@ backend/storage/app/public/songs/
 
 ## 🎵 How to Add Audio Files
 
-### Step 1: Download Audio Files
+### Option 1: Using yt-dlp (Recommended for Testing)
 
-You can download from:
-- [Zedge](https://www.zedge.net/find/ringtones/hindi) (testing only - copyright warning!)
-- [Free Music Archive](https://freemusicarchive.org)
-- [Incompetech](https://incompetech.com)
-- [Bensound](https://bensound.com)
+**Install yt-dlp:**
+```bash
+pip3 install -U yt-dlp
+```
 
-**Recommended format:**
+**Download 10-second audio clips from YouTube:**
+
+```bash
+# Hindi Songs
+yt-dlp --extractor-args "youtube:player_client=web" \
+  -x --audio-format mp3 \
+  --postprocessor-args "ffmpeg:-ss 00:01:00 -to 00:01:10" \
+  "https://www.youtube.com/watch?v=VIDEO_ID" \
+  -o "backend/storage/app/public/songs/hindi/kesariya.%(ext)s" \
+  --no-playlist
+
+# English Songs  
+yt-dlp --extractor-args "youtube:player_client=web" \
+  -x --audio-format mp3 \
+  --postprocessor-args "ffmpeg:-ss 00:00:30 -to 00:00:40" \
+  "https://www.youtube.com/watch?v=VIDEO_ID" \
+  -o "backend/storage/app/public/songs/english/shape_of_you.%(ext)s" \
+  --no-playlist
+```
+
+**Explanation:**
+- `--extractor-args "youtube:player_client=web"`: Bypass JS requirement
+- `-x`: Extract audio only
+- `--audio-format mp3`: Convert to MP3
+- `--postprocessor-args "ffmpeg:-ss XX -to YY"`: Extract 10-second clip
+  - `-ss 00:01:00`: Start at 1 minute
+  - `-to 00:01:10`: End at 1 minute 10 seconds
+- `-o "path/file.%(ext)s"`: Output location
+- `--no-playlist`: Download single video only
+
+**Find YouTube Video IDs:**
+1. Go to YouTube and search for the song
+2. Copy the URL (e.g., `https://www.youtube.com/watch?v=ABC123`)
+3. The part after `v=` is the video ID
+
+### Option 2: Manual Download from Free Sites
 - MP3 format
 - 128-320 kbps
 - 5-30 seconds duration
