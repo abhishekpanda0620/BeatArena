@@ -23,9 +23,30 @@ export default function SoloGame() {
     const [timeLeft, setTimeLeft] = useState(10);
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
     const [isAnswered, setIsAnswered] = useState(false);
-    const [isCorrect, setIsCorrect] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const router = useRouter();
+
+    // Reset state when song changes
+    useEffect(() => {
+        if (currentSong) {
+            setTimeLeft(10);
+            setIsAnswered(false);
+            setSelectedOption(null);
+        }
+    }, [currentSong]);
+
+    // Audio Logic
+    useEffect(() => {
+        if (currentSong && audioRef.current) {
+            audioRef.current.src = currentSong.audio_url;
+            audioRef.current.play().catch(e => console.log("Autoplay blocked", e));
+        }
+    }, [currentSong]);
+
+    const handleTimeUp = () => {
+        setIsAnswered(true);
+        setTimeout(() => nextRound(), 2000);
+    };
 
     // Timer Logic
     useEffect(() => {
@@ -34,6 +55,11 @@ export default function SoloGame() {
         const timer = setInterval(() => {
             setTimeLeft((prev) => {
                 if (prev <= 1) {
+                    // We can't call handleTimeUp directly here because it depends on state/props
+                    // and we want to avoid stale closures or complex dependencies.
+                    // Instead, we'll trigger the end of round in the effect cleanup or check in render.
+                    // But for simplicity, let's just clear interval and trigger next step.
+                    clearInterval(timer);
                     handleTimeUp();
                     return 0;
                 }
@@ -42,31 +68,14 @@ export default function SoloGame() {
         }, 1000);
 
         return () => clearInterval(timer);
-    }, [isAnswered, currentSong]);
-
-    // Audio Logic
-    useEffect(() => {
-        if (currentSong && audioRef.current) {
-            audioRef.current.src = currentSong.audio_url;
-            audioRef.current.play().catch(e => console.log("Autoplay blocked", e));
-            setTimeLeft(10);
-            setIsAnswered(false);
-            setSelectedOption(null);
-        }
-    }, [currentSong]);
-
-    const handleTimeUp = () => {
-        setIsAnswered(true);
-        setIsCorrect(false);
-        setTimeout(() => nextRound(), 2000);
-    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAnswered, currentSong]); // handleTimeUp is stable enough or we can ignore it for this simple timer logic
 
     const handleOptionClick = (option: string) => {
         if (isAnswered) return;
         
         setSelectedOption(option);
-        const correct = submitAnswer(option);
-        setIsCorrect(correct);
+        submitAnswer(option);
         setIsAnswered(true);
 
         setTimeout(() => nextRound(), 2000);
