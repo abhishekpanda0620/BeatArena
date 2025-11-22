@@ -2,6 +2,15 @@ node_modules/
 dist/
 .env
 .env.local
+*.log
+plan/
+
+# Audio files - DO NOT commit
+*.mp3
+*.wav
+*.m4a
+*.ogg
+backend/storage/app/public/songs/
 .DS_Store
 coverage/
 .next/
