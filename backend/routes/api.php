@@ -10,10 +10,3 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/songs', [SongController::class, 'index']);
 Route::get('/songs/random', [SongController::class, 'random']);
-
-// Spotify routes
-Route::prefix('spotify')->group(function () {
-    Route::get('/search', [App\Http\Controllers\SpotifyController::class, 'search']);
-    Route::get('/random', [App\Http\Controllers\SpotifyController::class, 'random']);
-    Route::get('/track/{id}', [App\Http\Controllers\SpotifyController::class, 'show']);
-});
