@@ -1,18 +1,3 @@
-# Stage 1: Build Dependencies
-FROM composer:latest AS vendor
-
-WORKDIR /app
-
-COPY composer.json composer.lock ./
-
-RUN composer install \
-    --no-interaction \
-    --no-plugins \
-    --no-scripts \
-    --no-dev \
-    --prefer-dist
-
-# Stage 2: Production Image
 FROM php:8.3-fpm-alpine
 
 # Install system dependencies
@@ -21,28 +6,26 @@ RUN apk add --no-cache \
     libzip-dev \
     oniguruma-dev \
     mysql-client \
-    shadow
+    bash
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
-# Create non-root user
-RUN groupadd -g 1000 www && \
-    useradd -u 1000 -ms /bin/bash -g www www
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Set working directory
 WORKDIR /var/www
 
-# Copy vendor files from previous stage
-COPY --from=vendor /app/vendor /var/www/vendor
+# Copy application files
 COPY . /var/www
 
+# Install dependencies
+RUN composer install --optimize-autoloader
+
 # Set permissions
-RUN chown -R www:www /var/www
+RUN chown -R www-data:www-data /var/www
 
-# Switch to non-root user
-USER www
+EXPOSE 8000
 
-EXPOSE 9000
-
-CMD ["php-fpm"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
