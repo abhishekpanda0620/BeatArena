@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+.env.local
+.DS_Store
+coverage/
+.next/
+build/
+vendor/
+.phpunit.result.cache
+storage/
+plan/
