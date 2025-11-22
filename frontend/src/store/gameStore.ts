@@ -47,7 +47,7 @@ export const useGameStore = create<GameState>((set, get) => ({
     },
 
     nextRound: () => {
-        const { currentRound, songs, score } = get();
+        const { currentRound, songs } = get();
         if (currentRound >= songs.length) {
             set({ gameOver: true, isPlaying: false });
         } else {
