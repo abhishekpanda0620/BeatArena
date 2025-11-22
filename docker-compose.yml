@@ -23,13 +23,6 @@ services:
       DB_DATABASE: beatarena
       DB_USERNAME: root
       DB_PASSWORD: password
-      BROADCAST_CONNECTION: reverb
-      REVERB_APP_ID: my-app-id
-      REVERB_APP_KEY: my-app-key
-      REVERB_APP_SECRET: my-app-secret
-      REVERB_HOST: "0.0.0.0"
-      REVERB_PORT: 8080
-      REVERB_SCHEME: http
     depends_on:
       - db
     networks:
@@ -37,40 +30,6 @@ services:
     command: sh -c "composer install && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000"
     ports:
       - "8787:8000"
-
-  reverb:
-    image: beatarena-backend
-    container_name: beatarena-reverb
-    restart: unless-stopped
-    working_dir: /var/www
-    volumes:
-      - ./backend:/var/www
-    environment:
-      APP_NAME: BeatArena
-      APP_ENV: local
-      APP_KEY: base64:4VcdFbbv6vACkNs5lSV/QX7cWX23FBvlSx9jEVOTdJo=
-      APP_DEBUG: true
-      APP_URL: http://localhost:8787
-      DB_CONNECTION: mysql
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_DATABASE: beatarena
-      DB_USERNAME: root
-      DB_PASSWORD: password
-      BROADCAST_CONNECTION: reverb
-      REVERB_APP_ID: my-app-id
-      REVERB_APP_KEY: my-app-key
-      REVERB_APP_SECRET: my-app-secret
-      REVERB_HOST: "0.0.0.0"
-      REVERB_PORT: 8083
-      REVERB_SCHEME: http
-    depends_on:
-      - backend
-    networks:
-      - beatarena-network
-    command: php artisan reverb:start --host=0.0.0.0 --port=8083
-    ports:
-      - "8083:8080"
 
   frontend:
     build:
@@ -84,10 +43,6 @@ services:
       - /app/node_modules
     environment:
       NEXT_PUBLIC_API_URL: http://localhost:8787
-      NEXT_PUBLIC_REVERB_APP_KEY: my-app-key
-      NEXT_PUBLIC_REVERB_HOST: localhost
-      NEXT_PUBLIC_REVERB_PORT: 8083
-      NEXT_PUBLIC_REVERB_SCHEME: http
     ports:
       - "3030:3000"
     depends_on:
@@ -105,7 +60,7 @@ services:
     volumes:
       - dbdata:/var/lib/mysql
     ports:
-      - "3307:3306"
+      - "3308:3306"
     networks:
       - beatarena-network
 
