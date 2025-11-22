@@ -6,13 +6,14 @@ RUN apk add --no-cache \
     libzip-dev \
     oniguruma-dev \
     mysql-client \
-    bash
+    bash \
+    curl
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Install Composer from official image
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
 # Set working directory
 WORKDIR /var/www
@@ -21,7 +22,7 @@ WORKDIR /var/www
 COPY . /var/www
 
 # Install dependencies
-RUN composer install --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www
