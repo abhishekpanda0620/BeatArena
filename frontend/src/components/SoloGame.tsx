@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card";
 import { Volume2, CheckCircle, XCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Leaderboard from "@/components/Leaderboard";
+import MusicVisualizer from "@/components/MusicVisualizer";
 
 interface SoloGameProps {
     hideLeaderboard?: boolean;
@@ -184,16 +185,6 @@ export default function SoloGame({ hideLeaderboard = false }: SoloGameProps = {}
                             <p className="text-green-400 mb-4">✓ Score submitted successfully!</p>
                         ) : null}
 
-                        {!hideLeaderboard && !showLeaderboard && !hasSubmitted && (
-                            <Button 
-                                onClick={fetchLeaderboard}
-                                variant="outline"
-                                className="w-full h-12 border-yellow-600 text-yellow-400 hover:bg-yellow-600/10 hover:text-yellow-300 mb-4"
-                            >
-                                👑 View Global Leaderboard
-                            </Button>
-                        )}
-
                         <div className="flex gap-4 justify-center mt-6">
                             <Button onClick={() => { resetGame(); router.push('/'); }} variant="outline" className="border-neutral-700 hover:bg-neutral-800 hover:text-white">
                                 Back to Home
@@ -227,25 +218,49 @@ export default function SoloGame({ hideLeaderboard = false }: SoloGameProps = {}
                 </div>
 
                 {/* Timer */}
-                <Progress value={(timeLeft / 20) * 100} className="h-2 bg-neutral-800" indicatorClassName="bg-purple-500" />
+                <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                        <span className={`font-bold ${
+                            timeLeft <= 5 ? 'text-red-400 animate-pulse' : 
+                            timeLeft <= 10 ? 'text-yellow-400' : 
+                            'text-neutral-400'
+                        }`}>
+                            {timeLeft}s remaining
+                        </span>
+                    </div>
+                    <Progress 
+                        value={(timeLeft / 20) * 100} 
+                        className="h-3 bg-neutral-800" 
+                        indicatorClassName={`transition-colors duration-300 ${
+                            timeLeft <= 5 ? 'bg-red-500' : 
+                            timeLeft <= 10 ? 'bg-yellow-500' : 
+                            'bg-purple-500'
+                        }`} 
+                    />
+                </div>
 
-                {/* Visualizer / Icon */}
-                <div className="h-48 flex items-center justify-center bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 shadow-2xl animate-pulse">
-                    <Volume2 className="w-24 h-24 text-purple-500 opacity-80" />
+                {/* Visualizer */}
+                <div className="h-56 flex flex-col items-center justify-center bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 shadow-2xl relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-pink-600/10" />
+                    <MusicVisualizer isPlaying={!isAnswered} />
+                    <p className="text-neutral-400 mt-4 text-sm">Listen carefully...</p>
                 </div>
 
                 {/* Options */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {currentSong.options.map((option, idx) => {
-                        let btnClass = "h-16 text-lg font-medium transition-all duration-300 border-neutral-700 bg-neutral-800 hover:bg-neutral-700";
+                        let btnClass = "h-20 text-lg font-semibold transition-all duration-300 border-2 border-neutral-700 bg-gradient-to-br from-neutral-800 to-neutral-900 hover:from-neutral-700 hover:to-neutral-800 hover:scale-[1.02] hover:shadow-lg hover:shadow-purple-900/20";
+                        let icon = null;
                         
                         if (isAnswered) {
                             if (option === currentSong.correct_option) {
-                                btnClass = "h-16 text-lg font-bold bg-green-600/20 border-green-500 text-green-400 hover:bg-green-600/20";
+                                btnClass = "h-20 text-lg font-bold bg-gradient-to-br from-green-600/30 to-green-700/20 border-2 border-green-500 text-green-300 hover:from-green-600/30 hover:to-green-700/20 animate-in fade-in slide-in-from-bottom-2 duration-500 shadow-lg shadow-green-900/30";
+                                icon = <CheckCircle className="w-6 h-6 inline mr-2" />;
                             } else if (option === selectedOption) {
-                                btnClass = "h-16 text-lg font-bold bg-red-600/20 border-red-500 text-red-400 hover:bg-red-600/20";
+                                btnClass = "h-20 text-lg font-bold bg-gradient-to-br from-red-600/30 to-red-700/20 border-2 border-red-500 text-red-300 hover:from-red-600/30 hover:to-red-700/20 animate-in fade-in shake duration-500 shadow-lg shadow-red-900/30";
+                                icon = <XCircle className="w-6 h-6 inline mr-2" />;
                             } else {
-                                btnClass = "h-16 text-lg opacity-50 bg-neutral-900 border-neutral-800";
+                                btnClass = "h-20 text-lg opacity-40 bg-neutral-900/50 border-2 border-neutral-800 pointer-events-none";
                             }
                         }
 
@@ -257,9 +272,8 @@ export default function SoloGame({ hideLeaderboard = false }: SoloGameProps = {}
                                 onClick={() => handleOptionClick(option)}
                                 disabled={isAnswered}
                             >
+                                {icon}
                                 {option}
-                                {isAnswered && option === currentSong.correct_option && <CheckCircle className="ml-2 w-5 h-5" />}
-                                {isAnswered && option === selectedOption && option !== currentSong.correct_option && <XCircle className="ml-2 w-5 h-5" />}
                             </Button>
                         );
                     })}

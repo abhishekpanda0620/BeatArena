@@ -23,7 +23,7 @@ export default function Leaderboard({ scores, title = "Leaderboard", currentPlay
                 <h2 className="text-xl font-bold">{title}</h2>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-2 max-h-96 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-neutral-700 scrollbar-track-neutral-900">
                 {scores.length === 0 ? (
                     <p className="text-neutral-400 text-center py-4">No scores yet. Be the first!</p>
                 ) : (
