@@ -20,7 +20,7 @@ export default function SoloGame() {
         songs
     } = useGameStore();
     
-    const [timeLeft, setTimeLeft] = useState(10);
+    const [timeLeft, setTimeLeft] = useState(20);
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
     const [isAnswered, setIsAnswered] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -29,7 +29,7 @@ export default function SoloGame() {
     // Reset state when song changes
     useEffect(() => {
         if (currentSong) {
-            setTimeLeft(10);
+            setTimeLeft(20);
             setIsAnswered(false);
             setSelectedOption(null);
         }
@@ -75,7 +75,7 @@ export default function SoloGame() {
         if (isAnswered) return;
         
         setSelectedOption(option);
-        submitAnswer(option);
+        submitAnswer(option, timeLeft);
         setIsAnswered(true);
 
         setTimeout(() => nextRound(), 2000);
@@ -115,7 +115,7 @@ export default function SoloGame() {
                 </div>
 
                 {/* Timer */}
-                <Progress value={(timeLeft / 10) * 100} className="h-2 bg-neutral-800" indicatorClassName="bg-purple-500" />
+                <Progress value={(timeLeft / 20) * 100} className="h-2 bg-neutral-800" indicatorClassName="bg-purple-500" />
 
                 {/* Visualizer / Icon */}
                 <div className="h-48 flex items-center justify-center bg-neutral-900/50 rounded-2xl border border-neutral-800 shadow-2xl animate-pulse">
