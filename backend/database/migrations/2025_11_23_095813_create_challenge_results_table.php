@@ -13,7 +13,16 @@ return new class extends Migration
     {
         Schema::create('challenge_results', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('challenge_id')->constrained()->onDelete('cascade');
+            $table->string('player_session_id')->index();
+            $table->string('player_name');
+            $table->integer('score');
+            $table->integer('time_taken'); // in milliseconds
+            $table->json('answers')->nullable();
+            $table->timestamp('completed_at')->useCurrent();
+            
+            // Prevent duplicate submissions from same session
+            $table->unique(['challenge_id', 'player_session_id']);
         });
     }
 

@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('challenges', function (Blueprint $table) {
             $table->id();
+            $table->string('challenge_code', 6)->unique();
+            $table->string('creator_session_id')->index();
+            $table->string('creator_name');
+            $table->string('language', 2);
+            $table->json('song_ids');
+            $table->string('status')->default('waiting')->index();
             $table->timestamps();
         });
     }

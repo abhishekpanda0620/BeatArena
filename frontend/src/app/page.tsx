@@ -47,28 +47,25 @@ export default function Home() {
           </Card>
 
           {/* Multiplayer Mode Card */}
-          <Card className="bg-neutral-900/50 border-neutral-800 backdrop-blur-sm hover:border-blue-500/50 transition-all duration-300 group cursor-pointer relative overflow-hidden">
-             <div className="absolute inset-0 bg-black/60 z-10 flex items-center justify-center backdrop-blur-[2px]">
-                <span className="bg-yellow-500/20 text-yellow-500 px-3 py-1 rounded-full text-sm font-bold border border-yellow-500/50">
-                    Coming Soon
-                </span>
-             </div>
+          <Card className="bg-neutral-900/50 border-neutral-800 backdrop-blur-sm hover:border-blue-500/50 transition-all duration-300 group cursor-pointer">
             <CardHeader>
               <CardTitle className="flex items-center justify-center gap-2 text-2xl text-white group-hover:text-blue-400 transition-colors">
                 <Users className="w-6 h-6" />
                 Multiplayer
               </CardTitle>
               <CardDescription className="text-neutral-400">
-                Battle friends in real-time.
+                Challenge friends and compete!
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-32 flex items-center justify-center">
                  <Music className="w-16 h-16 text-neutral-700 group-hover:text-blue-500 transition-all duration-300 transform group-hover:scale-110" />
               </div>
-              <Button disabled className="w-full bg-neutral-800 text-neutral-500 font-bold py-6 text-lg">
-                Create Room
-              </Button>
+              <Link href="/multiplayer">
+                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-6 text-lg shadow-lg shadow-blue-900/20">
+                  Play Multiplayer
+                </Button>
+              </Link>
             </CardContent>
           </Card>
         </div>
