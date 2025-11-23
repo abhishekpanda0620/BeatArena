@@ -7,6 +7,7 @@ export interface Song {
     audio_url: string;
     options: string[]; // For MCQ
     correct_option: string;
+    language: string; // added language field
 }
 
 interface GameState {
@@ -20,7 +21,7 @@ interface GameState {
     setSongs: (songs: Song[]) => void;
     startGame: () => void;
     nextRound: () => void;
-    submitAnswer: (answer: string) => boolean;
+    submitAnswer: (answer: string, timeLeft?: number) => boolean;
     resetGame: () => void;
 }
 
@@ -58,13 +59,16 @@ export const useGameStore = create<GameState>((set, get) => ({
         }
     },
 
-    submitAnswer: (answer) => {
+    submitAnswer: (answer, timeLeft = 0) => {
         const { currentSong, score } = get();
         if (!currentSong) return false;
 
         const isCorrect = answer === currentSong.correct_option;
         if (isCorrect) {
-            set({ score: score + 10 }); // Simple scoring
+            // Base score 10 + bonus for time left
+            // If answered immediately (20s left), score = 10 + 20 = 30
+            // If answered at last second (1s left), score = 10 + 1 = 11
+            set({ score: score + 10 + timeLeft });
         }
         return isCorrect;
     },
