@@ -5,7 +5,7 @@ import { useGameStore } from "@/store/gameStore";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Card } from "@/components/ui/card";
-import { Volume2, CheckCircle, XCircle } from "lucide-react";
+import { CheckCircle, XCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Leaderboard from "@/components/Leaderboard";
 import MusicVisualizer from "@/components/MusicVisualizer";
@@ -107,12 +107,14 @@ export default function SoloGame({ hideLeaderboard = false }: SoloGameProps = {}
 
         setIsSubmitting(true);
         try {
+            const language = localStorage.getItem('selectedLanguage') || 'en';
             const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8787';
             const response = await fetch(`${apiUrl}/api/solo/submit`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     player_name: playerName,
+                    language: language,
                     score: score,
                     time_taken: Math.floor((Date.now() - gameStartTime) / 1000),
                 }),
@@ -132,8 +134,9 @@ export default function SoloGame({ hideLeaderboard = false }: SoloGameProps = {}
 
     const fetchLeaderboard = async () => {
         try {
+            const language = localStorage.getItem('selectedLanguage') || 'en';
             const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8787';
-            const response = await fetch(`${apiUrl}/api/solo/leaderboard`);
+            const response = await fetch(`${apiUrl}/api/solo/leaderboard?language=${language}`);
             if (!response.ok) throw new Error('Failed to fetch leaderboard');
             const data = await response.json();
             setLeaderboard(data);

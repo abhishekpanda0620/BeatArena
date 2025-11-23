@@ -17,8 +17,10 @@ interface GameState {
     songs: Song[];
     currentSong: Song | null;
     gameOver: boolean;
+    selectedLanguage: string;
     
     setSongs: (songs: Song[]) => void;
+    setLanguage: (language: string) => void;
     startGame: () => void;
     nextRound: () => void;
     submitAnswer: (answer: string, timeLeft?: number) => boolean;
@@ -32,8 +34,16 @@ export const useGameStore = create<GameState>((set, get) => ({
     songs: [],
     currentSong: null,
     gameOver: false,
+    selectedLanguage: typeof window !== 'undefined' ? localStorage.getItem('selectedLanguage') || 'en' : 'en',
 
     setSongs: (songs) => set({ songs }),
+    
+    setLanguage: (language) => {
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('selectedLanguage', language);
+        }
+        set({ selectedLanguage: language });
+    },
 
     startGame: () => {
         const { songs } = get();

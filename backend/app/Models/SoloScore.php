@@ -9,5 +9,5 @@ class SoloScore extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['player_name', 'score', 'time_taken'];
+    protected $fillable = ['player_name', 'language', 'score', 'time_taken'];
 }

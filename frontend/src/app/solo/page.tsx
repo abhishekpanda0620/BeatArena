@@ -25,6 +25,10 @@ export default function SoloPage() {
             if (!response.ok) throw new Error('Failed to fetch songs');
             
             const data = await response.json();
+            
+            // Store language in localStorage and game store
+            localStorage.setItem('selectedLanguage', language);
+            
             setSongs(data);
             startGame();
             setGameStarted(true);

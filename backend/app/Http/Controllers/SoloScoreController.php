@@ -11,14 +11,18 @@ class SoloScoreController extends Controller
     {
         $validated = $request->validate([
             'player_name' => 'required|string|max:50',
+            'language' => 'required|in:en,hi',
             'score' => 'required|integer',
             'time_taken' => 'required|integer',
         ]);
 
-        // Update existing score only if the new score is higher
-        $existingScore = SoloScore::where('player_name', $validated['player_name'])->first();
+        // Check if username already exists for this language
+        $existingScore = SoloScore::where('player_name', $validated['player_name'])
+            ->where('language', $validated['language'])
+            ->first();
 
         if ($existingScore) {
+            // Update only if new score is higher
             if ($validated['score'] > $existingScore->score) {
                 $existingScore->update([
                     'score' => $validated['score'],
@@ -32,9 +36,12 @@ class SoloScoreController extends Controller
         return response()->json(['message' => 'Score submitted successfully']);
     }
 
-    public function leaderboard()
+    public function leaderboard(Request $request)
     {
-        $scores = SoloScore::orderByDesc('score')
+        $language = $request->query('language', 'en');
+        
+        $scores = SoloScore::where('language', $language)
+            ->orderByDesc('score')
             ->orderBy('time_taken')
             ->limit(10)
             ->get();
