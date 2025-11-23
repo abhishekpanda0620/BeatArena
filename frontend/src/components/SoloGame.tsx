@@ -170,10 +170,29 @@ export default function SoloGame({ hideLeaderboard = false }: SoloGameProps = {}
                                 >
                                     {isSubmitting ? 'Submitting...' : 'Submit to Leaderboard'}
                                 </Button>
+                                {!showLeaderboard && (
+                                    <Button 
+                                        onClick={fetchLeaderboard}
+                                        variant="outline"
+                                        className="w-full h-12 border-neutral-700 hover:bg-neutral-800 hover:text-white"
+                                    >
+                                        View Global Leaderboard
+                                    </Button>
+                                )}
                             </div>
                         ) : !hideLeaderboard && hasSubmitted ? (
                             <p className="text-green-400 mb-4">✓ Score submitted successfully!</p>
                         ) : null}
+
+                        {!hideLeaderboard && !showLeaderboard && !hasSubmitted && (
+                            <Button 
+                                onClick={fetchLeaderboard}
+                                variant="outline"
+                                className="w-full h-12 border-yellow-600 text-yellow-400 hover:bg-yellow-600/10 hover:text-yellow-300 mb-4"
+                            >
+                                👑 View Global Leaderboard
+                            </Button>
+                        )}
 
                         <div className="flex gap-4 justify-center mt-6">
                             <Button onClick={() => { resetGame(); router.push('/'); }} variant="outline" className="border-neutral-700 hover:bg-neutral-800 hover:text-white">
