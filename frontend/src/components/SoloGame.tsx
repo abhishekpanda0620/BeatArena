@@ -13,6 +13,12 @@ interface SoloGameProps {
     hideLeaderboard?: boolean;
 }
 
+interface Score {
+    player_name: string;
+    score: number;
+    time_taken: number;
+}
+
 export default function SoloGame({ hideLeaderboard = false }: SoloGameProps = {}) {
     const { 
         currentSong, 
@@ -31,7 +37,7 @@ export default function SoloGame({ hideLeaderboard = false }: SoloGameProps = {}
     const [playerName, setPlayerName] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [hasSubmitted, setHasSubmitted] = useState(false);
-    const [leaderboard, setLeaderboard] = useState<any[]>([]);
+    const [leaderboard, setLeaderboard] = useState<Score[]>([]);
     const [showLeaderboard, setShowLeaderboard] = useState(false);
     const [gameStartTime] = useState(Date.now());
     const audioRef = useRef<HTMLAudioElement | null>(null);

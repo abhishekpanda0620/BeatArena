@@ -5,7 +5,6 @@ import { useRouter, useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Trophy, Users, Clock } from "lucide-react";
 import Leaderboard from "@/components/Leaderboard";
 
 interface ChallengeResult {
