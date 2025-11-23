@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 export interface Song {
     id: number;
@@ -27,7 +28,9 @@ interface GameState {
     resetGame: () => void;
 }
 
-export const useGameStore = create<GameState>((set, get) => ({
+export const useGameStore = create<GameState>()(
+    persist(
+        (set, get) => ({
     isPlaying: false,
     currentRound: 0,
     score: 0,
@@ -90,4 +93,9 @@ export const useGameStore = create<GameState>((set, get) => ({
         gameOver: false,
         currentSong: null
     })
-}));
+}),
+        {
+            name: 'beat-arena-game-storage',
+        }
+    )
+);

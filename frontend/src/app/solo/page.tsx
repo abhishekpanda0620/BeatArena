@@ -7,15 +7,16 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
 export default function SoloPage() {
-    const { startGame, setSongs, resetGame } = useGameStore();
+    const { startGame, setSongs, songs, isPlaying, gameOver } = useGameStore();
     const [isLoading, setIsLoading] = useState(false);
     const [gameStarted, setGameStarted] = useState(false);
 
-    // Reset game state on mount to ensure fresh start
+    // Check if game is already in progress or finished on mount
     useEffect(() => {
-        resetGame();
-        setGameStarted(false);
-    }, [resetGame]);
+        if (songs.length > 0 && (isPlaying || gameOver)) {
+            setGameStarted(true);
+        }
+    }, [songs, isPlaying, gameOver]);
 
     const handleLanguageSelect = async (language: string) => {
         setIsLoading(true);
