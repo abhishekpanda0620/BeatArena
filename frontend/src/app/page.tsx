@@ -7,10 +7,8 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-neutral-950 text-white flex flex-col items-center justify-center p-4 relative overflow-hidden">
       {/* Background Gradients */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/20 rounded-full blur-[100px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600/20 rounded-full blur-[100px]" />
-      </div>
+      {/* Background Gradients */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20 animate-gradient-xy z-0 pointer-events-none" />
 
       <div className="z-10 max-w-4xl w-full text-center space-y-8">
         <div className="space-y-2">
@@ -24,7 +22,7 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
           {/* Solo Mode Card */}
-          <Card className="bg-neutral-900/50 border-neutral-800 backdrop-blur-sm hover:border-purple-500/50 transition-all duration-300 group cursor-pointer">
+          <Card className="bg-black/40 backdrop-blur-md border-white/10 hover:border-purple-500/50 transition-all duration-300 group cursor-pointer shadow-2xl shadow-purple-900/10 hover:-translate-y-1">
             <CardHeader>
               <CardTitle className="flex items-center justify-center gap-2 text-2xl text-white group-hover:text-purple-400 transition-colors">
                 <Headphones className="w-6 h-6" />
@@ -39,7 +37,7 @@ export default function Home() {
                  <Play className="w-16 h-16 text-neutral-700 group-hover:text-purple-500 transition-all duration-300 transform group-hover:scale-110" />
               </div>
               <Link href="/solo">
-                <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-6 text-lg shadow-lg shadow-purple-900/20">
+                <Button className="w-full h-14 text-lg font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-lg shadow-purple-900/20 transition-all duration-300 hover:scale-[1.02]">
                   Play Solo
                 </Button>
               </Link>
@@ -47,7 +45,7 @@ export default function Home() {
           </Card>
 
           {/* Multiplayer Mode Card */}
-          <Card className="bg-neutral-900/50 border-neutral-800 backdrop-blur-sm hover:border-blue-500/50 transition-all duration-300 group cursor-pointer">
+          <Card className="bg-black/40 backdrop-blur-md border-white/10 hover:border-blue-500/50 transition-all duration-300 group cursor-pointer shadow-2xl shadow-blue-900/10 hover:-translate-y-1">
             <CardHeader>
               <CardTitle className="flex items-center justify-center gap-2 text-2xl text-white group-hover:text-blue-400 transition-colors">
                 <Users className="w-6 h-6" />
@@ -62,7 +60,7 @@ export default function Home() {
                  <Music className="w-16 h-16 text-neutral-700 group-hover:text-blue-500 transition-all duration-300 transform group-hover:scale-110" />
               </div>
               <Link href="/multiplayer">
-                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-6 text-lg shadow-lg shadow-blue-900/20">
+                <Button className="w-full h-14 text-lg font-bold text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 shadow-lg shadow-blue-900/20 transition-all duration-300 hover:scale-[1.02]">
                   Play Multiplayer
                 </Button>
               </Link>

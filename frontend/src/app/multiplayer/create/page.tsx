@@ -58,11 +58,11 @@ export default function CreateChallengePage() {
 
     if (challengeCode) {
         return (
-            <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-950 text-white p-4">
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-black z-0 pointer-events-none" />
+            <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-950 text-white p-4 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20 animate-gradient-xy z-0 pointer-events-none" />
                 
                 <div className="z-10 w-full max-w-md space-y-8">
-                    <Card className="p-8 bg-neutral-900 border-neutral-800 text-center space-y-6">
+                    <Card className="p-8 bg-black/40 backdrop-blur-md border-white/10 text-center space-y-6 shadow-2xl shadow-purple-900/20">
                         <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
                             Challenge Created!
                         </h1>
@@ -107,11 +107,11 @@ export default function CreateChallengePage() {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-950 text-white p-4">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-black z-0 pointer-events-none" />
+        <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-950 text-white p-4 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20 animate-gradient-xy z-0 pointer-events-none" />
             
             <div className="z-10 w-full max-w-md space-y-8">
-                <Card className="p-8 bg-neutral-900 border-neutral-800 space-y-6">
+                <Card className="p-8 bg-black/40 backdrop-blur-md border-white/10 space-y-6 shadow-2xl shadow-purple-900/20">
                     <h1 className="text-3xl font-bold text-center bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
                         Create Challenge
                     </h1>

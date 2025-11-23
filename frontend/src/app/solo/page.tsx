@@ -40,8 +40,9 @@ export default function SoloPage() {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-950 text-white p-4">
-            <Card className="p-8 bg-neutral-900 border-neutral-800 text-center max-w-md w-full space-y-8">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-950 text-white p-4 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20 animate-gradient-xy z-0 pointer-events-none" />
+            <Card className="p-8 bg-black/40 backdrop-blur-md border-white/10 text-center max-w-md w-full space-y-8 shadow-2xl shadow-purple-900/20 relative z-10">
                 <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
                     Select Music Language
                 </h1>
@@ -50,7 +51,7 @@ export default function SoloPage() {
                     <Button 
                         onClick={() => handleLanguageSelect('en')} 
                         disabled={isLoading}
-                        className="h-16 text-xl bg-blue-600 hover:bg-blue-700 transition-all"
+                        className="h-16 text-xl font-bold text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 shadow-lg shadow-blue-900/20 transition-all duration-300 hover:scale-[1.02] border-0"
                     >
                         {isLoading ? "Loading..." : "English 🇬🇧"}
                     </Button>
@@ -58,7 +59,7 @@ export default function SoloPage() {
                     <Button 
                         onClick={() => handleLanguageSelect('hi')} 
                         disabled={isLoading}
-                        className="h-16 text-xl bg-orange-600 hover:bg-orange-700 transition-all"
+                        className="h-16 text-xl font-bold text-white bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 shadow-lg shadow-orange-900/20 transition-all duration-300 hover:scale-[1.02] border-0"
                     >
                         {isLoading ? "Loading..." : "Hindi 🇮🇳"}
                     </Button>

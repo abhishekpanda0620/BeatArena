@@ -98,5 +98,5 @@ export default function ChallengePlayPage() {
         );
     }
 
-    return <SoloGame />;
+    return <SoloGame hideLeaderboard={true} />;
 }

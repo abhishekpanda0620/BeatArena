@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Trophy, Users, Clock } from "lucide-react";
+import Leaderboard from "@/components/Leaderboard";
 
 interface ChallengeResult {
     id: number;
@@ -95,12 +96,12 @@ export default function ChallengeLobbyPage() {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-950 text-white p-4">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-black z-0 pointer-events-none" />
+        <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-950 text-white p-4 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20 animate-gradient-xy z-0 pointer-events-none" />
             
             <div className="z-10 w-full max-w-2xl space-y-6">
                 {/* Header */}
-                <Card className="p-6 bg-neutral-900 border-neutral-800">
+                <Card className="p-6 bg-black/40 backdrop-blur-md border-white/10 shadow-xl shadow-purple-900/10">
                     <div className="flex items-center justify-between">
                         <div>
                             <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
@@ -117,7 +118,7 @@ export default function ChallengeLobbyPage() {
 
                 {/* Player Input (if not played yet) */}
                 {!results.find(r => r.player_name === playerName) && (
-                    <Card className="p-6 bg-neutral-900 border-neutral-800 space-y-4">
+                    <Card className="p-6 bg-black/40 backdrop-blur-md border-white/10 space-y-4 shadow-xl shadow-blue-900/10">
                         <h2 className="text-xl font-bold">Join the Challenge</h2>
                         <Input
                             placeholder="Enter your name"
@@ -137,52 +138,11 @@ export default function ChallengeLobbyPage() {
                 )}
 
                 {/* Leaderboard */}
-                <Card className="p-6 bg-neutral-900 border-neutral-800 space-y-4">
-                    <div className="flex items-center gap-2">
-                        <Trophy className="w-6 h-6 text-yellow-400" />
-                        <h2 className="text-xl font-bold">Leaderboard</h2>
-                        <span className="text-neutral-400">({results.length} {results.length === 1 ? 'player' : 'players'})</span>
-                    </div>
-
-                    {results.length === 0 ? (
-                        <div className="text-center py-8 text-neutral-400">
-                            <Users className="w-12 h-12 mx-auto mb-3 opacity-50" />
-                            <p>No one has played yet. Be the first!</p>
-                        </div>
-                    ) : (
-                        <div className="space-y-2">
-                            {results.map((result, index) => (
-                                <div
-                                    key={result.id}
-                                    className={`flex items-center justify-between p-4 rounded-lg ${
-                                        index === 0 
-                                            ? 'bg-yellow-600/20 border border-yellow-600/50' 
-                                            : 'bg-neutral-800 border border-neutral-700'
-                                    }`}
-                                >
-                                    <div className="flex items-center gap-3">
-                                        <span className={`text-2xl font-bold ${
-                                            index === 0 ? 'text-yellow-400' : 'text-neutral-400'
-                                        }`}>
-                                            #{index + 1}
-                                        </span>
-                                        <div>
-                                            <p className="font-bold">{result.player_name}</p>
-                                            <div className="flex items-center gap-2 text-sm text-neutral-400">
-                                                <Clock className="w-3 h-3" />
-                                                <span>{result.time_taken}s</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="text-right">
-                                        <p className="text-2xl font-bold text-purple-400">{result.score}</p>
-                                        <p className="text-xs text-neutral-400">points</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </Card>
+                <Leaderboard 
+                    scores={results} 
+                    title={`Leaderboard (${results.length} ${results.length === 1 ? 'player' : 'players'})`}
+                    currentPlayerName={playerName}
+                />
 
                 {/* Back Button */}
                 <div className="text-center">

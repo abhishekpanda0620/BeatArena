@@ -24,8 +24,8 @@ export default function MultiplayerPage() {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-950 text-white p-4">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-black z-0 pointer-events-none" />
+        <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-950 text-white p-4 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20 animate-gradient-xy z-0 pointer-events-none" />
             
             <div className="z-10 w-full max-w-2xl space-y-8">
                 {/* Header */}
@@ -40,17 +40,17 @@ export default function MultiplayerPage() {
 
                 {/* Features */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <Card className="p-6 bg-neutral-900/50 border-neutral-800 text-center">
+                    <Card className="p-6 bg-black/40 backdrop-blur-md border-white/10 text-center hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-1">
                         <Users className="w-12 h-12 mx-auto mb-3 text-blue-400" />
                         <h3 className="font-bold mb-2">Play with Friends</h3>
                         <p className="text-sm text-neutral-400">Share a code and compete</p>
                     </Card>
-                    <Card className="p-6 bg-neutral-900/50 border-neutral-800 text-center">
+                    <Card className="p-6 bg-black/40 backdrop-blur-md border-white/10 text-center hover:border-yellow-500/50 transition-all duration-300 hover:-translate-y-1">
                         <Zap className="w-12 h-12 mx-auto mb-3 text-yellow-400" />
                         <h3 className="font-bold mb-2">Speed Matters</h3>
                         <p className="text-sm text-neutral-400">Faster answers = more points</p>
                     </Card>
-                    <Card className="p-6 bg-neutral-900/50 border-neutral-800 text-center">
+                    <Card className="p-6 bg-black/40 backdrop-blur-md border-white/10 text-center hover:border-purple-500/50 transition-all duration-300 hover:-translate-y-1">
                         <Trophy className="w-12 h-12 mx-auto mb-3 text-purple-400" />
                         <h3 className="font-bold mb-2">Compete & Win</h3>
                         <p className="text-sm text-neutral-400">Top the leaderboard</p>
@@ -60,7 +60,7 @@ export default function MultiplayerPage() {
                 {/* Actions */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Create Challenge */}
-                    <Card className="p-8 bg-neutral-900 border-neutral-800 space-y-4">
+                    <Card className="p-8 bg-black/40 backdrop-blur-md border-white/10 space-y-4 hover:border-purple-500/30 transition-all duration-300">
                         <h2 className="text-2xl font-bold text-center">Create Challenge</h2>
                         <p className="text-neutral-400 text-center text-sm">
                             Start a new game and invite friends
@@ -74,7 +74,7 @@ export default function MultiplayerPage() {
                     </Card>
 
                     {/* Join Challenge */}
-                    <Card className="p-8 bg-neutral-900 border-neutral-800 space-y-4">
+                    <Card className="p-8 bg-black/40 backdrop-blur-md border-white/10 space-y-4 hover:border-blue-500/30 transition-all duration-300">
                         <h2 className="text-2xl font-bold text-center">Join Challenge</h2>
                         <p className="text-neutral-400 text-center text-sm">
                             Enter a 6-digit code to join
