@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import Leaderboard from "@/components/Leaderboard";
+import Loader from '@/components/Loader';
 
 interface ChallengeResult {
     id: number;
@@ -86,11 +87,7 @@ export default function ChallengeLobbyPage() {
     };
 
     if (isLoading) {
-        return (
-            <div className="flex items-center justify-center min-h-screen bg-neutral-950 text-white">
-                <p className="text-xl">Loading challenge...</p>
-            </div>
-        );
+        return <Loader />;
     }
 
     if (error || !challenge) {
