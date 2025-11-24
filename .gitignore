@@ -19,3 +19,4 @@ vendor/
 .phpunit.result.cache
 storage/
 plan/
+songs.json
