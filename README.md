@@ -127,9 +127,7 @@ docker compose exec backend php artisan migrate:refresh --seed
 ---
 
 ## Contributing
-Contributions are welcome! Please follow these steps:
-{{ ... }}
-
+Contributions are welcome!
 ## License
 This project is licensed under the **MIT License** – see the `LICENSE` file for details.
 
