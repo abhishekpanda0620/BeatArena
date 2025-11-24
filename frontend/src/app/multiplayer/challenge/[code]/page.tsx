@@ -33,6 +33,19 @@ export default function ChallengeLobbyPage() {
     const [playerName, setPlayerName] = useState("");
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [isCreator, setIsCreator] = useState(false);
+
+    // Check if creator is accessing via URL parameter
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const urlParams = new URLSearchParams(window.location.search);
+            const creatorName = urlParams.get('creator');
+            if (creatorName) {
+                setPlayerName(decodeURIComponent(creatorName));
+                setIsCreator(true);
+            }
+        }
+    }, []);
 
     useEffect(() => {
         fetchChallengeData();
@@ -118,14 +131,25 @@ export default function ChallengeLobbyPage() {
                 {/* Player Input (if not played yet) */}
                 {!results.find(r => r.player_name === playerName) && (
                     <Card className="p-6 bg-black/40 backdrop-blur-md border-white/10 space-y-4 shadow-xl shadow-blue-900/10">
-                        <h2 className="text-xl font-bold">Join the Challenge</h2>
+                        <div className="flex items-center justify-between">
+                            <h2 className="text-xl font-bold">Join the Challenge</h2>
+                            {isCreator && (
+                                <span className="px-3 py-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-bold rounded-full">
+                                    Creator
+                                </span>
+                            )}
+                        </div>
                         <Input
                             placeholder="Enter your name"
                             value={playerName}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPlayerName(e.target.value)}
                             maxLength={50}
-                            className="h-12 bg-neutral-800 border-neutral-700"
+                            disabled={isCreator}
+                            className={`h-12 bg-neutral-800 border-neutral-700 ${isCreator ? 'opacity-75 cursor-not-allowed' : ''}`}
                         />
+                        {isCreator && (
+                            <p className="text-sm text-neutral-400">You created this challenge. Your name is already set.</p>
+                        )}
                         <Button
                             onClick={handleStartGame}
                             disabled={!playerName.trim()}

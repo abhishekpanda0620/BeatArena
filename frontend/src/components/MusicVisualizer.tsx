@@ -1,30 +1,44 @@
 "use client";
 
-interface MusicVisualizerProps {
-    isPlaying?: boolean;
-}
-
-export default function MusicVisualizer({ isPlaying = true }: MusicVisualizerProps) {
-    const bars = Array.from({ length: 5 }, (_, i) => i);
+export default function MusicVisualizer({ isPlaying = true }: { isPlaying?: boolean }) {
+    // Create 64 bars for a denser, more premium look
+    const bars = Array.from({ length: 64 }, (_, i) => i);
     
     return (
-        <div className="flex items-end justify-center gap-2 h-32">
-            {bars.map((i) => (
-                <div
-                    key={i}
-                    className={`w-3 bg-gradient-to-t from-purple-600 to-pink-500 rounded-full transition-all duration-300 ${
-                        isPlaying ? 'animate-music-bar' : 'h-4'
-                    }`}
-                    style={{
-                        animationDelay: `${i * 0.1}s`,
-                        animationDuration: `${0.6 + (i % 3) * 0.2}s`,
-                    }}
-                />
-            ))}
+        <div className="w-full h-full flex items-end justify-center gap-[2px] px-4">
+            {bars.map((i) => {
+                // Randomize heights and animation delays for more organic feel
+                const baseHeight = 10 + (i % 5) * 5;
+                const maxHeight = 60 + (i % 10) * 10;
+                const delay = (i * 0.02) % 1;
+                const duration = 0.4 + (i % 7) * 0.1;
+                
+                return (
+                    <div
+                        key={i}
+                        className={`flex-1 max-w-[4px] rounded-t-sm transition-all duration-200 ${
+                            isPlaying ? 'animate-music-bar' : ''
+                        }`}
+                        style={{
+                            background: 'linear-gradient(to top, #7c3aed, #a855f7, #ec4899)',
+                            height: isPlaying ? `${baseHeight}%` : '8px',
+                            animationDelay: `${delay}s`,
+                            animationDuration: `${duration}s`,
+                            opacity: isPlaying ? 1 : 0.3,
+                        }}
+                    />
+                );
+            })}
             <style jsx>{`
                 @keyframes music-bar {
-                    0%, 100% { height: 1rem; }
-                    50% { height: 8rem; }
+                    0%, 100% { 
+                        height: ${isPlaying ? '10%' : '8px'};
+                        opacity: 0.6;
+                    }
+                    50% { 
+                        height: ${isPlaying ? '90%' : '8px'};
+                        opacity: 1;
+                    }
                 }
                 .animate-music-bar {
                     animation: music-bar ease-in-out infinite;

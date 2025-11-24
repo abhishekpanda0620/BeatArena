@@ -52,7 +52,7 @@ export default function CreateChallengePage() {
 
     const handleStartGame = () => {
         if (challengeCode) {
-            router.push(`/multiplayer/challenge/${challengeCode}`);
+            router.push(`/multiplayer/challenge/${challengeCode}?creator=${encodeURIComponent(playerName)}`);
         }
     };
 

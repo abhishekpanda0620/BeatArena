@@ -42,8 +42,16 @@ export default function SoloGame({ hideLeaderboard = false }: SoloGameProps = {}
     const [showLeaderboard, setShowLeaderboard] = useState(false);
     const [gameStartTime] = useState(Date.now());
     const [shuffledOptions, setShuffledOptions] = useState<string[]>([]);
+    const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const router = useRouter();
+
+    // Set audio element when ref is available
+    useEffect(() => {
+        if (audioRef.current && !audioElement) {
+            setAudioElement(audioRef.current);
+        }
+    }, [audioRef.current, audioElement]);
 
     // Shuffle array helper function
     const shuffleArray = <T,>(array: T[]): T[] => {
@@ -259,7 +267,7 @@ export default function SoloGame({ hideLeaderboard = false }: SoloGameProps = {}
                 <div className="h-56 flex flex-col items-center justify-center bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 shadow-2xl relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-pink-600/10" />
                     <MusicVisualizer isPlaying={!isAnswered} />
-                    <p className="text-neutral-400 mt-4 text-sm">Listen carefully...</p>
+                    <p className="text-neutral-400 mt-4 text-sm z-10">Listen carefully...</p>
                 </div>
 
                 {/* Options */}
@@ -296,7 +304,7 @@ export default function SoloGame({ hideLeaderboard = false }: SoloGameProps = {}
                 </div>
 
                 {/* Hidden Audio Player */}
-                <audio ref={audioRef} className="hidden" />
+                <audio ref={audioRef} className="hidden" crossOrigin="anonymous" />
             </div>
         </div>
     );
