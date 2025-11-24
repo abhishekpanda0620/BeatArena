@@ -41,8 +41,19 @@ export default function SoloGame({ hideLeaderboard = false }: SoloGameProps = {}
     const [leaderboard, setLeaderboard] = useState<Score[]>([]);
     const [showLeaderboard, setShowLeaderboard] = useState(false);
     const [gameStartTime] = useState(Date.now());
+    const [shuffledOptions, setShuffledOptions] = useState<string[]>([]);
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const router = useRouter();
+
+    // Shuffle array helper function
+    const shuffleArray = <T,>(array: T[]): T[] => {
+        const shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    };
 
     // Reset state when song changes
     useEffect(() => {
@@ -50,6 +61,8 @@ export default function SoloGame({ hideLeaderboard = false }: SoloGameProps = {}
             setTimeLeft(20);
             setIsAnswered(false);
             setSelectedOption(null);
+            // Shuffle options each time a new song loads
+            setShuffledOptions(shuffleArray(currentSong.options));
         }
     }, [currentSong]);
 
@@ -251,7 +264,7 @@ export default function SoloGame({ hideLeaderboard = false }: SoloGameProps = {}
 
                 {/* Options */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {currentSong.options.map((option, idx) => {
+                    {shuffledOptions.map((option, idx) => {
                         let btnClass = "h-20 text-lg font-semibold transition-all duration-300 border-2 border-neutral-700 bg-gradient-to-br from-neutral-800 to-neutral-900 hover:from-neutral-700 hover:to-neutral-800 hover:scale-[1.02] hover:shadow-lg hover:shadow-purple-900/20";
                         let icon = null;
                         
