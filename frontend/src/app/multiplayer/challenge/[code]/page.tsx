@@ -95,14 +95,58 @@ export default function ChallengeLobbyPage() {
 
     if (error || !challenge) {
         return (
-            <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-950 text-white p-4">
-                <Card className="p-8 bg-neutral-900 border-neutral-800 text-center space-y-4">
-                    <h1 className="text-2xl font-bold text-red-400">Challenge Not Found</h1>
-                    <p className="text-neutral-400">The challenge code &quot;{code}&quot; doesn&apos;t exist.</p>
-                    <Button onClick={() => router.push("/multiplayer")} className="bg-purple-600 hover:bg-purple-700">
-                        Back to Multiplayer
-                    </Button>
-                </Card>
+            <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-950 text-white p-4 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20 animate-gradient-xy z-0 pointer-events-none" />
+                
+                <div className="z-10 w-full max-w-md">
+                    <Card className="p-8 bg-black/40 backdrop-blur-md border-white/10 text-center space-y-6 shadow-2xl shadow-red-900/20">
+                        {/* Error Icon */}
+                        <div className="flex justify-center">
+                            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-red-500/20 to-orange-500/20 border-2 border-red-500/50 flex items-center justify-center">
+                                <svg className="w-10 h-10 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        {/* Error Message */}
+                        <div className="space-y-2">
+                            <h1 className="text-3xl font-bold bg-gradient-to-r from-red-400 to-orange-500 bg-clip-text text-transparent">
+                                Challenge Not Found
+                            </h1>
+                            <p className="text-neutral-400">
+                                The challenge code <span className="text-red-400 font-mono font-bold">&quot;{code}&quot;</span> doesn&apos;t exist or has expired.
+                            </p>
+                        </div>
+
+                        {/* Suggestions */}
+                        <div className="bg-neutral-800/50 border border-neutral-700 rounded-lg p-4 text-left space-y-2">
+                            <p className="text-sm font-semibold text-neutral-300">Please check:</p>
+                            <ul className="text-sm text-neutral-400 space-y-1 list-disc list-inside">
+                                <li>The challenge code is correct</li>
+                                <li>The challenge hasn&apos;t expired</li>
+                                <li>You have the latest code from the creator</li>
+                            </ul>
+                        </div>
+
+                        {/* Actions */}
+                        <div className="space-y-3">
+                            <Button 
+                                onClick={() => router.push("/multiplayer")} 
+                                className="w-full h-12 text-lg font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-lg shadow-purple-900/20 transition-all duration-300 hover:scale-[1.02]"
+                            >
+                                Back to Multiplayer
+                            </Button>
+                            <Button 
+                                onClick={() => router.push("/")} 
+                                variant="outline"
+                                className="w-full border-neutral-700 hover:bg-neutral-800"
+                            >
+                                Go to Home
+                            </Button>
+                        </div>
+                    </Card>
+                </div>
             </div>
         );
     }
