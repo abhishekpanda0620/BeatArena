@@ -96,6 +96,9 @@ export const useGameStore = create<GameState>()(
 }),
         {
             name: 'beat-arena-game-storage',
+            partialize: (state) => ({
+                selectedLanguage: state.selectedLanguage,
+            }),
         }
     )
 );
