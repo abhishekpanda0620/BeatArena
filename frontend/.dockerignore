@@ -1,0 +1,19 @@
+# Exclude unnecessary files from Docker build context
+node_modules
+.next
+coverage
+*.log
+*.tsbuildinfo
+*.tsc
+*.lock
+Dockerfile
+docker-compose.yml
+.git
+.gitignore
+README.md
+.env*
+*.md
+src/**/*.test.*
+src/**/*.spec.*
+playwright.config.ts
+e2e
