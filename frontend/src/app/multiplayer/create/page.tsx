@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Copy, Check } from "lucide-react";
+import { toast } from "sonner";
 
 export default function CreateChallengePage() {
     const router = useRouter();
@@ -16,7 +17,10 @@ export default function CreateChallengePage() {
     const [copied, setCopied] = useState(false);
 
     const handleCreateChallenge = async () => {
-        if (!playerName.trim() || !language) return;
+        if (!playerName.trim() || !language) {
+            toast.error("Please enter your name and select a language.");
+            return;
+        }
 
         setIsCreating(true);
         try {
@@ -34,9 +38,10 @@ export default function CreateChallengePage() {
 
             const data = await response.json();
             setChallengeCode(data.challenge.challenge_code);
+            toast.success("Challenge created successfully!");
         } catch (error) {
             console.error("Failed to create challenge:", error);
-            alert("Failed to create challenge. Please try again.");
+            toast.error("Failed to create challenge. Please try again.");
         } finally {
             setIsCreating(false);
         }
@@ -46,6 +51,7 @@ export default function CreateChallengePage() {
         if (challengeCode) {
             navigator.clipboard.writeText(challengeCode);
             setCopied(true);
+            toast.success("Challenge code copied to clipboard!");
             setTimeout(() => setCopied(false), 2000);
         }
     };
@@ -128,7 +134,6 @@ export default function CreateChallengePage() {
                         />
                     </div>
 
-                    {/* Language Selection */}
                     <div className="space-y-2">
                         <label className="text-sm text-neutral-400">Select Music Language</label>
                         <div className="grid grid-cols-2 gap-3">
@@ -155,7 +160,6 @@ export default function CreateChallengePage() {
                         </div>
                     </div>
 
-                    {/* Create Button */}
                     <Button
                         onClick={handleCreateChallenge}
                         disabled={!playerName.trim() || !language || isCreating}
