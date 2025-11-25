@@ -20,3 +20,6 @@ vendor/
 storage/
 plan/
 songs.json
+playwright-report/
+test-results/
+
