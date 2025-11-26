@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Copy, Check } from "lucide-react";
 import { toast } from "sonner";
+import ShareButtons from "@/components/ShareButtons";
 
 export default function CreateChallengePage() {
     const router = useRouter();
@@ -56,11 +57,7 @@ export default function CreateChallengePage() {
         }
     };
 
-    const handleStartGame = () => {
-        if (challengeCode) {
-            router.push(`/multiplayer/challenge/${challengeCode}?creator=${encodeURIComponent(playerName)}`);
-        }
-    };
+
 
     if (challengeCode) {
         return (
@@ -91,21 +88,11 @@ export default function CreateChallengePage() {
                             </div>
                         </div>
 
-                        <div className="space-y-3">
-                            <Button
-                                onClick={handleStartGame}
-                                className="w-full h-14 text-lg font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-lg shadow-purple-900/20 transition-all duration-300 hover:scale-[1.02]"
-                            >
-                                Enter Lobby
-                            </Button>
-                            <Button
-                                onClick={() => router.push("/multiplayer")}
-                                variant="outline"
-                                className="w-full border-neutral-700"
-                            >
-                                Back to Multiplayer
-                            </Button>
-                        </div>
+                            {/* Share Buttons */}
+                            <ShareButtons
+                              challengeCode={challengeCode}
+                              challengeUrl={`${window.location.origin}/multiplayer/challenge/${challengeCode}`}
+                            />
                     </Card>
                 </div>
             </div>

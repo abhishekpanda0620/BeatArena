@@ -9,7 +9,7 @@ export default function MusicVisualizer({ isPlaying = true }: { isPlaying?: bool
             {bars.map((i) => {
                 // Randomize heights and animation delays for more organic feel
                 const baseHeight = 10 + (i % 5) * 5;
-                const maxHeight = 60 + (i % 10) * 10;
+
                 const delay = (i * 0.02) % 1;
                 const duration = 0.4 + (i % 7) * 0.1;
                 

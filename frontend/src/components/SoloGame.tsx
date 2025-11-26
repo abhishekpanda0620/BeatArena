@@ -51,7 +51,7 @@ export default function SoloGame({ hideLeaderboard = false }: SoloGameProps = {}
         if (audioRef.current && !audioElement) {
             setAudioElement(audioRef.current);
         }
-    }, [audioRef.current, audioElement]);
+    }, [audioElement]);
 
     // Shuffle array helper function
     const shuffleArray = <T,>(array: T[]): T[] => {

@@ -28,7 +28,7 @@ export function useAudioAnalyzer(audioElement: HTMLAudioElement | null, isPlayin
             try {
                 // Create AudioContext if it doesn't exist
                 if (!audioContextRef.current) {
-                    audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+                    audioContextRef.current = new (window.AudioContext || (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext)();
                 }
 
                 const audioContext = audioContextRef.current;
